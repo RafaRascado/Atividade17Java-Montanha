@@ -13,53 +13,42 @@ class Main {
     double GaleaoDeTinta = 3.6;
     double valorDaLata = 80;
     double valorDoGaleao = 25;
+    double rendimentoDeTinta = 6;
 
     System.out.println("Informe a quantidade de tinta necessária: ");
 
     Scanner tintaSolicitada = new Scanner(System.in);
     quantidadeDeTintaSolicitada = tintaSolicitada.nextDouble();
 
-    double resultadoDaMetragemEmLata = Math.ceil(quantidadeDeTintaSolicitada / 6);
+    double resultadoDaMetragemEmLata;
 
-    if (resultadoDaMetragemEmLata > LataDeTinta) {
-      double resultado = Math.ceil(resultadoDaMetragemEmLata / LataDeTinta);
-      double valorTotal = valorDaLata * resultado;
-      System.out.println(
-          "A quantidade de lata de tinta necessária é: " + resultado + "O valor das compras serão: " + valorTotal);
-    } else {
-      System.out.println("Será necessário apenas uma lata de tinta e o valor é: R$ 80,00");
-    }
+    resultadoDaMetragemEmLata = Math.ceil(quantidadeDeTintaSolicitada / (LataDeTinta * rendimentoDeTinta));
 
-    System.out.println("Informe a quantidade de metros que quer pintar: ");
+    double valorTotal = valorDaLata * resultadoDaMetragemEmLata;
+    System.out.println(
+        "A quantidade de lata de tinta necessária é: " + resultadoDaMetragemEmLata + "O valor das compras serão: "
+            + valorTotal);
 
-    Scanner tecladoGaleao = new Scanner(System.in);
-    double quantidadeDeTintaEmGaleao = tecladoGaleao.nextDouble();
+    double resul = Math.ceil(quantidadeDeTintaSolicitada / (GaleaoDeTinta * rendimentoDeTinta));
+    double valorTotalGaleao = resul * valorDoGaleao;
+    System.out.println("Será necessário: " + resul + " E o valor será: " + valorTotalGaleao);
 
-    double resultadoEmGaleao = Math.ceil(quantidadeDeTintaEmGaleao / 6);
+    double metragemMaisDezPorCento = quantidadeDeTintaSolicitada * 1.1;
 
-    if (resultadoEmGaleao > GaleaoDeTinta) {
-      double resul = Math.ceil(resultadoEmGaleao / GaleaoDeTinta);
-      double valorTotalGaleao = resul * valorDoGaleao;
-      System.out.println("Será necessário: " + resul + " E o valor será: " + valorTotalGaleao);
-    } else {
-      System.out.println("Será necessário apenas uma lata de tinta e o valor será de R$ 25.00");
-    }
+    double quantidadeMisturaEmLatas = metragemMaisDezPorCento / (LataDeTinta * rendimentoDeTinta);
 
-    System.out.println("Informe novamente um valor:");
-    Scanner tecladoNovamente = new Scanner(System.in);
-    double quantidade = tecladoNovamente.nextDouble();
+    double quantidadeMisturaLatasArredondadas = Math.ceil(metragemMaisDezPorCento / (LataDeTinta * rendimentoDeTinta));
 
-    double resultadoDaQuantidade = Math.ceil(quantidade / 6);
+    double quantidadeDesperdicioLata = quantidadeMisturaLatasArredondadas - quantidadeMisturaEmLatas;
 
-    if (resultadoDaQuantidade > LataDeTinta) {
-      double resultadoTotal = Math.ceil(resultadoDaQuantidade / LataDeTinta);
+    double quantidadeLitrosConvertendoEmGaleos = (1 - quantidadeDesperdicioLata) * LataDeTinta;
 
-      double sobra = resultadoTotal % 18;
-      double galeaoNecessario = Math.ceil(sobra / GaleaoDeTinta);
+    double quantidadeEmGaloesArredondada = Math.ceil(quantidadeLitrosConvertendoEmGaleos / GaleaoDeTinta);
 
-      System.out.println("A quantidade que de lata necessária é: " + resultadoTotal
-          + " E a quantidade de gaelao necessária é: " + galeaoNecessario);
+    double quantidadeEmLataFinal = Math.floor(quantidadeMisturaEmLatas);
 
-    }
+    System.out.println("A quantidade que de lata necessária é: " + quantidadeEmLataFinal
+        + " E a quantidade de gaelao necessária é: " + quantidadeEmGaloesArredondada);
+
   }
 }
